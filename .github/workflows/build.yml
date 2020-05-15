@@ -15,7 +15,7 @@ jobs:
         include:
         - name: Ubuntu
           os: ubuntu-latest
-          test_render: OFF
+          test_render: ON
           python: python3
           cmake_config: -DMATERIALX_PYTHON_VERSION=3 
         - name: MacOS
@@ -40,8 +40,22 @@ jobs:
       config: Release
 
     steps:
-    - run: sudo apt-get install libgl-dev libglu1-mesa-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libx11-dev
+    - name: linux deps
+      run: sudo apt-get install libgl-dev libglu1-mesa-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libx11-dev
       if: ${{matrix.os == 'ubuntu-latest'}}
+    - name: linux headless deps
+      run: sudo apt-get install xvfb xorg-dev mesa-utils
+      if: ${{matrix.os == 'ubuntu-latest' && matrix.test_render == 'ON'}}
+    - name: headless environment
+      run: 'echo "::set-env name=DISPLAY:::0" &&
+      echo "::set-env name=MESA_GL_VERSION_OVERRIDE::4.0FC" &&
+      echo "::set-env name=MESA_GLSL_VERSION_OVERRIDE::400"'
+      if: ${{matrix.os == 'ubuntu-latest' && matrix.test_render == 'ON'}}
+    - name: headless display
+      run: Xvfb $DISPLAY &
+      if: ${{matrix.os == 'ubuntu-latest' && matrix.test_render == 'ON'}}
+    - run: glxinfo
+      if: ${{matrix.os == 'ubuntu-latest' && matrix.test_render == 'ON'}}
     - uses: actions/checkout@v2
       with:
         submodules: recursive
