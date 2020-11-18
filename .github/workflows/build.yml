@@ -94,15 +94,16 @@ jobs:
         fi
         if [ "${{ matrix.test_render }}" = "ON" ]; then
           sudo apt-get install xvfb xorg-dev mesa-utils libglx-mesa0 libgl1-mesa-glx libgl1-mesa-dri
-          echo "DISPLAY=0" >> $GITHUB_ENV
-          echo "MESA_GL_VERSION_OVERRIDE=4.0FC" >> $GITHUB_ENV
-          echo "MESA_GLSL_VERSION_OVERRIDE=400" >> $GITHUB_ENV
-          echo "GALLIUM_DRIVER=softpipe" >> $GITHUB_ENV
           echo "DISPLAY: $DISPLAY"
           Xvfb $DISPLAY -screen 0 1600x1080x24&
           echo "beginning glxinfo"
           glxinfo
         fi
+      env:
+        DISPLAY: 0
+        MESA_GL_VERSION_OVERRIDE: 4.0FC
+        MESA_GLSL_VERSION_OVERRIDE: 400
+        GALLIUM_DRIVER: softpipe
 
 
     - name: Install Dependencies (MacOS)
