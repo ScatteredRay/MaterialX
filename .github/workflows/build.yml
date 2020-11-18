@@ -95,9 +95,9 @@ jobs:
         if [ "${{ matrix.test_render }}" = "ON" ]; then
           sudo apt-get install xvfb xorg-dev mesa-utils libglx-mesa0 libgl1-mesa-glx libgl1-mesa-dri
           echo "::set-env name=DISPLAY:::0"
-          echo "::set-env name=MESA_GL_VERSION_OVERRIDE::4.0FC" &&
-          echo "::set-env name=MESA_GLSL_VERSION_OVERRIDE::400" &&
-          echo "::set-env name=GALLIUM_DRIVER::softpipe"'
+          echo "::set-env name=MESA_GL_VERSION_OVERRIDE::4.0FC"
+          echo "::set-env name=MESA_GLSL_VERSION_OVERRIDE::400"
+          echo "::set-env name=GALLIUM_DRIVER::softpipe"
           Xvfb $DISPLAY -screen 0 1600x1080x32&
           glxinfo
         fi
