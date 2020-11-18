@@ -27,6 +27,8 @@ jobs:
           compiler: gcc
           compiler_version: "6"
           python: 3.7
+          test_render: ON
+          generate_html: ON
 
         - name: Linux_GCC_10_Python37
           os: ubuntu-latest
