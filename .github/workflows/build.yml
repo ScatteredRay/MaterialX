@@ -27,14 +27,14 @@ jobs:
           compiler: gcc
           compiler_version: "6"
           python: 3.7
-          test_render: ON
-          generate_html: ON
 
         - name: Linux_GCC_10_Python37
           os: ubuntu-latest
           compiler: gcc
           compiler_version: "10"
           python: 3.7
+          test_render: ON
+          generate_html: ON
 
         - name: MacOS_Xcode_10_Python27
           os: macos-latest
@@ -94,10 +94,10 @@ jobs:
         fi
         if [ "${{ matrix.test_render }}" = "ON" ]; then
           sudo apt-get install xvfb xorg-dev mesa-utils libglx-mesa0 libgl1-mesa-glx libgl1-mesa-dri
-          echo "::set-env name=DISPLAY:::0"
-          echo "::set-env name=MESA_GL_VERSION_OVERRIDE::4.0FC"
-          echo "::set-env name=MESA_GLSL_VERSION_OVERRIDE::400"
-          echo "::set-env name=GALLIUM_DRIVER::softpipe"
+          echo "DISPLAY=0" >> $GITHUB_ENV
+          echo "MESA_GL_VERSION_OVERRIDE=4.0FC" >> $GITHUB_ENV
+          echo "MESA_GLSL_VERSION_OVERRIDE=400" >> $GITHUB_ENV
+          echo "GALLIUM_DRIVER=softpipe" >> $GITHUB_ENV
           Xvfb $DISPLAY -screen 0 1600x1080x32&
           glxinfo
         fi
