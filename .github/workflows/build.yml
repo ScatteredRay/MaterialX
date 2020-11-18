@@ -100,7 +100,7 @@ jobs:
           glxinfo
         fi
       env:
-        DISPLAY: "0"
+        DISPLAY: ":0"
         MESA_GL_VERSION_OVERRIDE: 4.0FC
         MESA_GLSL_VERSION_OVERRIDE: 400
         GALLIUM_DRIVER: softpipe
