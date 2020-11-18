@@ -98,7 +98,9 @@ jobs:
           echo "MESA_GL_VERSION_OVERRIDE=4.0FC" >> $GITHUB_ENV
           echo "MESA_GLSL_VERSION_OVERRIDE=400" >> $GITHUB_ENV
           echo "GALLIUM_DRIVER=softpipe" >> $GITHUB_ENV
+          echo "DISPLAY: $DISPLAY"
           Xvfb $DISPLAY -screen 0 1600x1080x24&
+          echo "beginning glxinfo"
           glxinfo
         fi
 
